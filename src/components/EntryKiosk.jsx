@@ -156,7 +156,7 @@ export default function EntryKiosk({ onAddEntry, bans }) {
           </p>
 
           {/* Gate Pass with QR Code */}
-          <div className="bg-forest-900/80 rounded-2xl p-6 mb-6 border border-forest-500/30 relative overflow-hidden">
+          <div className="gate-pass-card bg-forest-900/80 rounded-2xl p-6 mb-6 border border-forest-500/30 relative overflow-hidden">
             {/* Dashed ticket edge */}
             <div className="absolute left-0 right-0 top-0 border-t-2 border-dashed border-forest-600/30" />
 
@@ -207,13 +207,25 @@ export default function EntryKiosk({ onAddEntry, bans }) {
             </p>
           </div>
 
-          <button
-            id="entry-new-hiker-btn"
-            onClick={handleReset}
-            className="w-full py-4 rounded-xl bg-forest-600 hover:bg-forest-500 active:bg-forest-400 text-white text-lg font-bold transition-all duration-150 cursor-pointer"
-          >
-            Register Next Hiker
-          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="w-full py-4 rounded-xl bg-forest-800 border border-forest-600/30 hover:bg-forest-700 active:bg-forest-600 text-white text-lg font-bold transition-all duration-150 cursor-pointer flex items-center justify-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Print Pass
+            </button>
+            <button
+              id="entry-new-hiker-btn"
+              onClick={handleReset}
+              className="w-full py-4 rounded-xl bg-forest-600 hover:bg-forest-500 active:bg-forest-400 text-white text-lg font-bold transition-all duration-150 cursor-pointer"
+            >
+              Next Hiker
+            </button>
+          </div>
         </div>
       </div>
     )

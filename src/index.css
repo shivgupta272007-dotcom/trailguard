@@ -1,0 +1,408 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Earthy greens */
+  --color-forest-950: #0a1f0e;
+  --color-forest-900: #0f2d14;
+  --color-forest-800: #1a3d1f;
+  --color-forest-700: #245a2c;
+  --color-forest-600: #2e7639;
+  --color-forest-500: #3a9448;
+  --color-forest-400: #4db85e;
+  --color-forest-300: #72d080;
+  --color-forest-200: #a3e4ad;
+  --color-forest-100: #d4f4d8;
+  --color-forest-50: #edfaef;
+
+  /* Warm earth tones */
+  --color-earth-700: #6b4226;
+  --color-earth-600: #8b5e3c;
+  --color-earth-500: #a67c52;
+  --color-earth-400: #c49a6c;
+  --color-earth-300: #dbb890;
+  --color-earth-200: #f0d9b5;
+  --color-earth-100: #faf0e0;
+
+  /* Amber/warning */
+  --color-amber-600: #d97706;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  --color-amber-100: #fef3c7;
+
+  /* Red for forfeit */
+  --color-red-600: #dc2626;
+  --color-red-500: #ef4444;
+  --color-red-100: #fee2e2;
+
+  /* Sky for info */
+  --color-sky-600: #0284c7;
+  --color-sky-100: #e0f2fe;
+}
+
+/* Base styles */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-forest-950);
+  min-height: 100dvh;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-forest-600);
+  border-radius: 999px;
+}
+
+/* ===================== */
+/*   BACKGROUND SYSTEM   */
+/* ===================== */
+
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-scene-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.8s ease-in-out;
+  animation: bgSlowZoom 30s ease-in-out infinite alternate;
+}
+
+.bg-scene-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 31, 14, 0.82) 0%,
+    rgba(15, 45, 20, 0.72) 30%,
+    rgba(10, 31, 14, 0.80) 70%,
+    rgba(10, 31, 14, 0.92) 100%
+  );
+  z-index: 1;
+}
+
+/* Vignette on top of background */
+.bg-scene-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-shadow: inset 0 0 60px 20px rgba(10, 31, 14, 0.6);
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .bg-scene-vignette {
+    box-shadow: inset 0 0 150px 40px rgba(10, 31, 14, 0.6);
+  }
+}
+
+/* ============================== */
+/*   TREKKING THEMED ANIMATIONS   */
+/* ============================== */
+
+/* Slow cinematic zoom on background image */
+@keyframes bgSlowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* Floating leaves */
+@keyframes floatLeaf {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(var(--leaf-x, 80px), var(--leaf-y, 100vh)) rotate(var(--leaf-rot, 360deg));
+    opacity: 0;
+  }
+}
+
+.floating-leaf {
+  position: absolute;
+  pointer-events: none;
+  font-size: var(--leaf-size, 16px);
+  animation: floatLeaf var(--leaf-duration, 12s) ease-in-out infinite;
+  animation-delay: var(--leaf-delay, 0s);
+  z-index: 3;
+}
+
+/* Drifting clouds */
+@keyframes driftCloud {
+  0% {
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--cloud-opacity, 0.08);
+  }
+  90% {
+    opacity: var(--cloud-opacity, 0.08);
+  }
+  100% {
+    transform: translateX(120vw);
+    opacity: 0;
+  }
+}
+
+.drifting-cloud {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  width: var(--cloud-w, 400px);
+  height: var(--cloud-h, 80px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,255,255, var(--cloud-opacity, 0.08)) 0%, transparent 70%);
+  filter: blur(30px);
+  animation: driftCloud var(--cloud-duration, 40s) linear infinite;
+  animation-delay: var(--cloud-delay, 0s);
+}
+
+/* Mist / fog drift */
+@keyframes mistDrift {
+  0%, 100% { transform: translateX(0) scaleX(1); opacity: 0.15; }
+  50% { transform: translateX(30px) scaleX(1.05); opacity: 0.25; }
+}
+
+.mist-layer {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  right: -10%;
+  height: 40%;
+  background: linear-gradient(0deg, rgba(10, 31, 14, 0.9) 0%, transparent 100%);
+  z-index: 2;
+  animation: mistDrift 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Bird silhouettes flying across */
+@keyframes birdFly {
+  0% {
+    transform: translate(-50px, 0) scaleX(1);
+    opacity: 0;
+  }
+  5% { opacity: 0.4; }
+  50% {
+    transform: translate(50vw, -20px) scaleX(0.95);
+    opacity: 0.4;
+  }
+  95% { opacity: 0.4; }
+  100% {
+    transform: translate(105vw, -40px) scaleX(1);
+    opacity: 0;
+  }
+}
+
+.flying-bird {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  font-size: var(--bird-size, 12px);
+  animation: birdFly var(--bird-duration, 20s) linear infinite;
+  animation-delay: var(--bird-delay, 0s);
+  opacity: 0;
+}
+
+/* Gentle sun rays */
+@keyframes sunRayPulse {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.08; }
+}
+
+.sun-ray {
+  position: absolute;
+  top: -20%;
+  z-index: 2;
+  width: 200px;
+  height: 120%;
+  background: linear-gradient(180deg, rgba(255, 220, 100, 0.15) 0%, transparent 80%);
+  transform: rotate(var(--ray-angle, 15deg));
+  transform-origin: top center;
+  animation: sunRayPulse var(--ray-duration, 8s) ease-in-out infinite;
+  animation-delay: var(--ray-delay, 0s);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+/* ============================== */
+/*   ANIMATED TREK TRAIL          */
+/* ============================== */
+
+.animated-trail-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.6;
+  mask-image: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  -webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+@media (min-width: 640px) {
+  .animated-trail-container {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .animated-trail-container {
+    height: 300px;
+  }
+}
+
+
+@keyframes trailDash1 {
+  to { stroke-dashoffset: -320; }
+}
+
+@keyframes trailDash2 {
+  to { stroke-dashoffset: -320; }
+}
+
+@keyframes trailDash3 {
+  to { stroke-dashoffset: -340; }
+}
+
+.trail-path-1 {
+  animation: trailDash1 8s linear infinite;
+}
+
+.trail-path-2 {
+  animation: trailDash2 12s linear infinite;
+}
+
+.trail-path-3 {
+  animation: trailDash3 15s linear infinite;
+}
+
+.trail-dot {
+  filter: drop-shadow(0 0 4px rgba(77, 184, 94, 0.5));
+}
+
+/* ======================== */
+/*   CORE UI ANIMATIONS     */
+/* ======================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(130px); }
+  100% { transform: translateY(0); }
+}
+
+@media (min-width: 640px) {
+  @keyframes scanLine {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(180px); }
+    100% { transform: translateY(0); }
+  }
+}
+
+/* Tab transition */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.35s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out both;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
+}
+
+.animate-scan-line {
+  animation: scanLine 2.5s ease-in-out infinite;
+}
+
+.animate-tab-enter {
+  animation: tabFadeIn 0.35s ease-out both;
+}
+
+/* Staggered delays */
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+.delay-5 { animation-delay: 0.25s; }

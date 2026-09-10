@@ -412,29 +412,40 @@ body {
 /* ============================== */
 
 @media print {
-  body {
+  /* Set base paper styles */
+  body, html, #root {
     background: white !important;
     color: black !important;
+    height: auto !important;
+    min-height: auto !important;
   }
   
-  /* Hide all generic app UI elements by default */
-  #root > * {
+  /* Hide specific structural elements we don't want printed */
+  .bg-scene, 
+  .animated-trail-container, 
+  header, 
+  footer,
+  .print-hide {
     display: none !important;
   }
   
-  /* Prevent animations from running on print */
+  /* Force all background colors and shadows to be transparent for clean printing */
   * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
     animation: none !important;
     transition: none !important;
   }
 
-  /* Show only the gate pass card */
+  /* Make the main wrapper behave like a static block so it flows nicely */
+  .relative.z-10 {
+    position: static !important;
+    min-height: auto !important;
+  }
+
+  /* Style the gate pass card to fill the page cleanly */
   .gate-pass-card {
     display: block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
     margin: 0 !important;
     padding: 24px !important;
     background: white !important;
@@ -451,7 +462,9 @@ body {
     border-color: #999 !important;
   }
   
+  /* specifically make sure the QR wrapper is clean */
   .gate-pass-card .shadow-lg {
     box-shadow: none !important;
+    border: 1px solid #eee !important;
   }
 }

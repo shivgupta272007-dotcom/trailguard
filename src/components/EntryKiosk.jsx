@@ -201,13 +201,13 @@ export default function EntryKiosk({ onAddEntry, bans }) {
             </div>
           </div>
 
-          <div className="bg-amber-500/8 rounded-xl p-4 mb-6 border border-amber-500/20">
+          <div className="print-hide bg-amber-500/8 rounded-xl p-4 mb-6 border border-amber-500/20">
             <p className="text-amber-300 text-sm font-medium">
               ⚠️ Return all items at exit. Missing items will result in a fine and a <strong>30-day trekking ban</strong>.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="print-hide grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => window.print()}

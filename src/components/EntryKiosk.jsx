@@ -161,7 +161,7 @@ export default function EntryKiosk({ onAddEntry, bans }) {
             <div className="absolute left-0 right-0 top-0 border-t-2 border-dashed border-forest-600/30" />
 
             <div className="flex items-center justify-center gap-2 mb-4">
-              <img src="/logo.png" alt="" className="w-7 h-7 object-contain" />
+              <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="w-7 h-7 object-contain" />
               <p className="text-xs font-semibold text-forest-400 uppercase tracking-[0.2em]">TrailGuard Gate Pass</p>
             </div>
 

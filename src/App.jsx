@@ -24,9 +24,9 @@ const TABS = [
 ]
 
 const BG_IMAGES = {
-  entry: '/bg-entry.png',
-  exit: '/bg-exit.png',
-  dashboard: '/bg-dashboard.png',
+  entry: `${import.meta.env.BASE_URL}bg-entry.png`,
+  exit: `${import.meta.env.BASE_URL}bg-exit.png`,
+  dashboard: `${import.meta.env.BASE_URL}bg-dashboard.png`,
 }
 
 // Leaf configurations per tab
@@ -184,7 +184,7 @@ export default function App() {
           <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 py-2.5 sm:py-3 flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3">
               <img
-                src="/logo.png"
+                src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="TrailGuard Logo"
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-lg"
               />
@@ -229,7 +229,7 @@ export default function App() {
         {/* Footer */}
         <footer className="border-t border-forest-800/30 py-4">
           <div className="flex items-center justify-center gap-2">
-            <img src="/logo.png" alt="" className="w-5 h-5 object-contain opacity-40" />
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="w-5 h-5 object-contain opacity-40" />
             <span className="text-xs text-forest-600/80">TrailGuard · carry in, carry out 🌿</span>
           </div>
         </footer>
